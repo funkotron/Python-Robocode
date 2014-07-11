@@ -10,7 +10,9 @@ import os
 import math
 
 class Bullet(QGraphicsPixmapItem):
-    
+    blade_size = 24
+
+
     def __init__(self, power, color, bot):
         QGraphicsPixmapItem.__init__(self)
         #graphics
@@ -38,6 +40,7 @@ class Bullet(QGraphicsPixmapItem):
 
         self.angle = angle
         self.setPos(pos)
+        self.origin = pos
         self.scene = scene
         self.isfired = True
 
@@ -60,7 +63,8 @@ class Bullet(QGraphicsPixmapItem):
             dx = - math.sin(math.radians(self.angle))*10.0
             dy = math.cos(math.radians(self.angle))*10.0
             self.setPos(x+dx, y+dy)
-            if x < 0 or y < 0 or x > self.scene.width or y > self.scene.height:
+            distance = math.sqrt((pos.x()-self.origin.x())**2 + (pos.y()-self.origin.y())**2)
+            if x < 0 or y < 0 or x > self.scene.width or y > self.scene.height or distance > self.blade_size:
                 self.robot.onBulletMiss(id(self))
                 self.scene.removeItem(self)
                 self.robot.removeMyProtectedItem(self)

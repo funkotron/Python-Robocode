@@ -372,7 +372,7 @@ class Robot(QtGui.QGraphicsItemGroup):
         bot = self
         bullet.init(pos, angle, self.__parent)
 
-        self.__changeHealth(self, -bullet.power) 
+        # self.__changeHealth(self, -bullet.power)
         return id(bullet)
         
     def setBulletsColor(self, r, g, b):
